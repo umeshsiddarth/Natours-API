@@ -1,0 +1,23 @@
+{
+  "name": "natours-api",
+  "version": "1.0.0",
+  "description": "Learning Node, Express and MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umeshsiddarth/Natours-API.git"
+  },
+  "author": "Umesh Siddarth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/umeshsiddarth/Natours-API/issues"
+  },
+  "homepage": "https://github.com/umeshsiddarth/Natours-API#readme",
+  "dependencies": {
+    "express": "^4.18.3"
+  }
+}
