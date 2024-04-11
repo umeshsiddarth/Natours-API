@@ -14,7 +14,9 @@ app.use(express.json());
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
-app.get("/api/v1/tours", (req, res) => {
+
+// Route Handlers
+const getAllTours = (req, res) => {
   res.status(200).json({
     status: "success",
     results: tours.length,
@@ -23,10 +25,9 @@ app.get("/api/v1/tours", (req, res) => {
       // endpoint : variable
     },
   });
-});
+};
 
-// Responding to URL parameters
-app.get("/api/v1/tours/:id", (req, res) => {
+const getTour = (req, res) => {
   const id = Number(req.params.id);
   // Condition to check whether the requested id is present on not using the id itself and respond back as failed request
   // if (id > tours.length) {
@@ -48,12 +49,12 @@ app.get("/api/v1/tours/:id", (req, res) => {
   res.status(200).json({
     status: "success",
     data: {
-      tours: tour,
+      tour: tour,
     },
   });
-});
+};
 
-app.post("/api/v1/tours", (req, res) => {
+const addNewTour = (req, res) => {
   const newID = tours[tours.length - 1].id + 1;
   const newTour = Object.assign({ id: newID }, req.body);
   tours.push(newTour);
@@ -69,7 +70,53 @@ app.post("/api/v1/tours", (req, res) => {
       });
     }
   );
-});
+};
+
+const updateTour = (req, res) => {
+  if (Number(req.params.id) > tours.length) {
+    res.status(404).json({
+      status: "fail",
+      message: "Inavli ID",
+    });
+  }
+  res.status(200).json({
+    status: "success",
+    data: {
+      tour: "Updated Tour",
+    },
+  });
+};
+
+const deleteTour = (req, res) => {
+  if (Number(req.params.id) > tours.length) {
+    return res.status(404).json({
+      status: "fail",
+      message: "Invalid ID",
+    });
+  }
+
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+};
+
+// Routes
+// app.get("/api/v1/tours", getAllTours);
+// Responding to URL parameters
+// app.get("/api/v1/tours/:id", getTour);
+// app.post("/api/v1/tours", addNewTour);
+// app.patch("/api/v1/tours/:id", updateTour);
+// app.delete("/api/v1/tours/:id", deleteTour);
+
+// Refactoring the above methods as below using chaining methods
+
+app.route("/api/v1/tours").get(getAllTours).post(addNewTour);
+app
+  .route("/api/v1/tours/:id")
+  .get(getTour)
+  .patch(updateTour)
+  .delete(deleteTour);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
