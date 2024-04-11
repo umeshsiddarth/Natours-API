@@ -1,9 +1,20 @@
 const fs = require("fs");
 const express = require("express");
+const morgan = require("morgan");
+
 const app = express(); // Created to get the bunch of values we get to work with upon calling express.
 const port = 3000;
 // Adding Middleware
 app.use(express.json());
+
+// Adding 3rd Party Middleware
+app.use(morgan("dev"));
+
+// Adding custom middleware
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 // app.get("/", (req, res) => {
 //   res
 //     .status(200)
@@ -17,8 +28,10 @@ const tours = JSON.parse(
 
 // Route Handlers
 const getAllTours = (req, res) => {
+  console.log(req.requestTime);
   res.status(200).json({
     status: "success",
+    requestedAt: req.requestTime,
     results: tours.length,
     data: {
       tours: tours,
@@ -30,7 +43,7 @@ const getAllTours = (req, res) => {
 const getTour = (req, res) => {
   const id = Number(req.params.id);
   // Condition to check whether the requested id is present on not using the id itself and respond back as failed request
-  // if (id > tours.length) {
+  // if (id > tours.length-1) {
   //   return res.status(404).json({
   //     status: "fail",
   //     message: "Invalid ID",
@@ -73,7 +86,7 @@ const addNewTour = (req, res) => {
 };
 
 const updateTour = (req, res) => {
-  if (Number(req.params.id) > tours.length) {
+  if (Number(req.params.id) > tours.length - 1) {
     res.status(404).json({
       status: "fail",
       message: "Inavli ID",
@@ -88,7 +101,7 @@ const updateTour = (req, res) => {
 };
 
 const deleteTour = (req, res) => {
-  if (Number(req.params.id) > tours.length) {
+  if (Number(req.params.id) > tours.length - 1) {
     return res.status(404).json({
       status: "fail",
       message: "Invalid ID",
