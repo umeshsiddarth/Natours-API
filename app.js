@@ -12,6 +12,9 @@ app.use(express.json());
 // Adding 3rd Party Middleware
 app.use(morgan("dev"));
 
+// Middleware to serve static files
+app.use(express.static(`${__dirname}/public`));
+
 // Adding custom middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
