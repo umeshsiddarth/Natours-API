@@ -1,5 +1,12 @@
 const express = require("express");
-const tourControllers = require("../controllers/tourController");
+const tourControllers = require("./../controllers/tourController");
+
+const router = express.Router();
+
+// Middleware with params
+
+router.param("id", tourControllers.checkID);
+
 // Routes
 // app.get("/", (req, res) => {
 //   res
@@ -31,7 +38,6 @@ const tourControllers = require("../controllers/tourController");
 //   .delete(deleteUser);
 
 // Cleaning the code based on Mounting Router method and using middlewares
-const router = express.Router();
 
 router
   .route("/")
