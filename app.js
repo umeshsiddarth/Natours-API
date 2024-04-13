@@ -10,7 +10,9 @@ const app = express(); // Created to get the bunch of values we get to work with
 app.use(express.json());
 
 // Adding 3rd Party Middleware
-app.use(morgan("dev"));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 // Middleware to serve static files
 app.use(express.static(`${__dirname}/public`));
