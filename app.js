@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes");
 
-const app = express(); // Created to get the bunch of values we get to work with upon calling express.
+const app = express(); // Created to get the bunch of methods we get to work with upon calling express.
 
 // Adding Middleware
 app.use(express.json());
