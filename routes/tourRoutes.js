@@ -1,6 +1,7 @@
 const express = require("express");
 const tourControllers = require("./../controllers/tourController");
 
+// Creating new Router
 const router = express.Router();
 
 // Middleware with params
