@@ -1,5 +1,4 @@
 const fs = require("fs");
-const Tour = require("./../model/newModel");
 
 // Reading Data from a local json file
 const tours = JSON.parse(
