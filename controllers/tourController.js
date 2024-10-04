@@ -1,4 +1,4 @@
-const Tour = require("./../model/newModel");
+const Tour = require("../model/tourModel");
 
 // Route Handlers
 exports.getAllTours = async (req, res) => {

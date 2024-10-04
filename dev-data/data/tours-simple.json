@@ -205,17 +205,5 @@
             "2022-01-16,10:00",
             "2022-12-12,10:00"
         ]
-    },
-    {
-        "id": 9,
-        "name": "Coorg Trek",
-        "duration": "20",
-        "difficulty": "hard"
-    },
-    {
-        "id": 10,
-        "name": "Coorg Trek",
-        "duration": "20",
-        "difficulty": "hard"
     }
 ]
