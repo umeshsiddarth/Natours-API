@@ -50,6 +50,8 @@ const tourSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(), // The millisec data will be automatically converted to today's date in mongo
+    // select: false,
+    // This is to avoid showign this particular field on query
   },
   startDates: [Date],
 });
