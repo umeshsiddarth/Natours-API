@@ -29,10 +29,27 @@ exports.getAllTours = async (req, res) => {
     });
     // console.log(JSON.parse(queryStr));
 
-    const query = Tour.find(JSON.parse(queryStr));
+    let query = Tour.find(JSON.parse(queryStr));
 
+    // 3) Sorting
+    if (req.query.sort) {
+      // The below line works because Tour.find() is going to return a query and the query object has methods such as sort
+      const sortBy = req.query.sort.split(",").join(" ");
+      query.sort(sortBy);
+      // console.log(sortBy);
+    } else {
+      query.sort("-createdAt");
+    }
     // find() is used for querying all data from a doc
     // const tours = await Tour.find();
+
+    // 4) FIELD LIMITING (Projecting)
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      query.select(fields);
+    } else {
+      query.select("-__v");
+    }
 
     // EXECUTE QUERY
     const tours = await query;
