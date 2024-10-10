@@ -4,6 +4,14 @@ const tourControllers = require("./../controllers/tourController");
 // Creating new Router
 const router = express.Router();
 
+// Alias example
+// router
+//   .route("/top-5-cheap-tours")
+//   .get(tourControllers.alias, tourControllers.getAllTours);
+
+// Route for aggregation pipeline
+router.route("/tour-stats").get(tourControllers.getTourStats);
+
 router
   .route("/")
   .get(tourControllers.getAllTours)
