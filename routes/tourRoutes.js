@@ -11,6 +11,7 @@ const router = express.Router();
 
 // Route for aggregation pipeline
 router.route("/tour-stats").get(tourControllers.getTourStats);
+router.route("/monthly-plan/:year").get(tourControllers.getMonthlyPlan);
 
 router
   .route("/")
