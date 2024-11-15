@@ -103,7 +103,7 @@ const catchAsync = require("./../utils/catchAsync");
 // Exported to Utils and Imported here. Leave it here for reference.
 
 // BEFORE Wrapping
-exports.getAllTours = async (req, res) => {
+exports.getAllTours = async (req, res, next) => {
   try {
     // We are chaining all the methods in the features along with creating the instance of the class is due to modifying or building the query with multiple features and finally to call it.
     const features = new APIFeatures(Tour.find(), req.query)
@@ -128,7 +128,7 @@ exports.getAllTours = async (req, res) => {
 };
 
 // AFTER Wrapping
-exports.getAllTours = catchAsync(async (req, res) => {
+exports.getAllTours = catchAsync(async (req, res, next) => {
   // We are chaining all the methods in the features along with creating the instance of the class is due to modifying or building the query with multiple features and finally to call it.
   const features = new APIFeatures(Tour.find(), req.query)
     .filter()
@@ -144,7 +144,7 @@ exports.getAllTours = catchAsync(async (req, res) => {
     },
   });
 });
-exports.getTour = catchAsync(async (req, res) => {
+exports.getTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.id);
   // findById is equal to Tour.findOne({_id: req.params.id})
   res.status(200).json({
@@ -184,7 +184,7 @@ exports.createTour = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateTour = catchAsync(async (req, res) => {
+exports.updateTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -197,7 +197,7 @@ exports.updateTour = catchAsync(async (req, res) => {
   });
 });
 
-exports.deleteTour = catchAsync(async (req, res) => {
+exports.deleteTour = catchAsync(async (req, res, next) => {
   await Tour.findByIdAndDelete(req.params.id);
   res.status(204).json({
     status: "success",
@@ -206,7 +206,7 @@ exports.deleteTour = catchAsync(async (req, res) => {
 });
 
 // Aggregation Pipeline
-exports.getTourStats = catchAsync(async (req, res) => {
+exports.getTourStats = catchAsync(async (req, res, next) => {
   const stats = await Tour.aggregate([
     {
       // Matching or filtering the values of a certain query
@@ -247,7 +247,7 @@ exports.getTourStats = catchAsync(async (req, res) => {
   });
 });
 
-exports.getMonthlyPlan = catchAsync(async (req, res) => {
+exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
   const year = req.params.year * 1;
   const monthlyData = await Tour.aggregate([
     {
